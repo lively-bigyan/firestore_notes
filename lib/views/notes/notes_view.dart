@@ -31,16 +31,8 @@ class ViewNotes extends StatelessWidget {
       ),
       body: GetX<NoteViewController>(
         builder: (ctrl) {
-          if (ctrl != null && ctrl.notes != null) {
-            return ListView.separated(
-                padding: EdgeInsets.all(10),
-                separatorBuilder: (context, i) => const SizedBox(height: 10),
-                itemCount: ctrl.notes.length,
-                itemBuilder: (context, i) {
-                  return GestureDetector(
-                      onTap: () => _buildBottomSheet(ctrl.notes[i]),
-                      child: NoteCard(note: ctrl.notes[i]));
-                });
+          if (ctrl.notes == null) {
+            return CircularProgressIndicator();
           } else if (ctrl.notes.length == 0) {
             return Center(
               child: Text("No notes added yet.",
@@ -50,7 +42,15 @@ class ViewNotes extends StatelessWidget {
                       .copyWith(color: Colors.grey)),
             );
           } else {
-            return CircularProgressIndicator();
+            return ListView.separated(
+                padding: EdgeInsets.all(10),
+                separatorBuilder: (context, i) => const SizedBox(height: 10),
+                itemCount: ctrl.notes.length,
+                itemBuilder: (context, i) {
+                  return GestureDetector(
+                      onTap: () => _buildBottomSheet(ctrl.notes[i]),
+                      child: NoteCard(note: ctrl.notes[i]));
+                });
           }
         },
       ),
@@ -76,6 +76,7 @@ class ViewNotes extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(4), topRight: Radius.circular(4))),
             child: Material(
+              color: Colors.white,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [

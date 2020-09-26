@@ -13,13 +13,7 @@ class NoteEditor extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Obx(
-          () => Text(NoteController.to.isEdit ? "Edit Note" : "Take Notes"),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Get.back();
-          },
+          () => Text(NoteController.to.isEdit ? "Edit Note" : "Add a Note"),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -35,10 +29,21 @@ class NoteEditor extends StatelessWidget {
           init: NoteController(noteModel),
           builder: (ctrl) {
             return ListView(
+              padding: EdgeInsets.all(10),
               children: [
                 Container(
                   padding: EdgeInsets.all(10),
-                  color: Colors.blue[50],
+                  decoration: BoxDecoration(
+                      color: Colors.grey[100],
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8)),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.grey[400],
+                            offset: Offset(0, -2))
+                      ]),
                   child: TextFormField(
                     controller: ctrl.title,
                     style: TextStyle(fontSize: 20),
@@ -52,13 +57,23 @@ class NoteEditor extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  height: 200,
+                  height: Get.height / 1.5,
                   padding: EdgeInsets.all(10),
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8),
+                          bottomRight: Radius.circular(8)),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 5,
+                            color: Colors.grey[300],
+                            offset: Offset(0, 2))
+                      ]),
                   child: TextFormField(
                     controller: ctrl.details,
                     focusNode: ctrl.detailsNode,
-                    style: TextStyle(fontSize: 14),
+                    style: TextStyle(fontSize: 16),
                     maxLines: 20,
                     minLines: 5,
                     decoration: InputDecoration(
